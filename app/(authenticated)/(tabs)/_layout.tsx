@@ -3,7 +3,8 @@ import { Colors } from '@/constants/Colors';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MoreButton from '@/components/MoreButton';
-import * as Haptics from 'expo-haptics';
+import { HapticTab } from '@/components/HapticTap';
+
 const Layout = () => {
   return (
     <Tabs
@@ -14,6 +15,7 @@ const Layout = () => {
           backgroundColor: '#FEFAFA',
           borderTopWidth: 0,
         },
+        tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
         name="today"
@@ -28,11 +30,6 @@ const Layout = () => {
             />
           ),
         }}
-        listeners={() => ({
-          tabPress: () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          },
-        })}
       />
       <Tabs.Screen
         name="upcoming"
@@ -43,11 +40,6 @@ const Layout = () => {
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={size} color={color} />
           ),
         }}
-        listeners={() => ({
-          tabPress: () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          },
-        })}
       />
       <Tabs.Screen
         name="search"
@@ -58,11 +50,6 @@ const Layout = () => {
             <Ionicons name={focused ? 'search' : 'search-outline'} size={size} color={color} />
           ),
         }}
-        listeners={() => ({
-          tabPress: () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          },
-        })}
       />
       <Tabs.Screen
         name="browse"
@@ -77,11 +64,6 @@ const Layout = () => {
             />
           ),
         }}
-        listeners={() => ({
-          tabPress: () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          },
-        })}
       />
     </Tabs>
   );
