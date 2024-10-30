@@ -1,4 +1,4 @@
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Stack, useRouter, useSegments, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
@@ -19,14 +19,15 @@ const InitialLayout = () => {
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
   const segments = useSegments();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!isLoaded) return;
     const inAuthGroup = segments[0] === '(authenticated)';
 
     if (isSignedIn && !inAuthGroup) {
-      router.replace('/(authenticated)/(tabs)/index');
-    } else if (!isSignedIn) {
+      router.replace('/(authenticated)/(tabs)/today');
+    } else if (!isSignedIn && pathname !== '/') {
       router.replace('/');
     }
   }, [isSignedIn]);
