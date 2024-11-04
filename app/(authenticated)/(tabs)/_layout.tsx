@@ -35,7 +35,7 @@ const Layout = () => {
         name="upcoming"
         options={{
           title: 'Upcoming',
-          headerRight: () => <MoreButton />,
+          headerRight: () => <MoreButton pageName="Upcoming" />,
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={size} color={color} />
           ),

@@ -11,3 +11,4 @@ npm add zeego
 npm i react-native-ios-context-menu react-native-ios-utilities
 
 npx expo install expo-sqlite
+npm i date-fns

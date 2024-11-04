@@ -7,6 +7,9 @@ import { View, ActivityIndicator } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { tokenCache } from '@/utils/cache';
 import { LogBox } from 'react-native';
+import { SQLiteProvider, type SQLiteDatabase } from 'expo-sqlite';
+import { migrateDbIfNeeded } from '@/utils/dbMigration';
+
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 if (!CLERK_PUBLISHABLE_KEY) {
   throw new Error(
@@ -57,11 +60,14 @@ const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
       <ClerkLoaded>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <InitialLayout />
-        </GestureHandlerRootView>
+        <SQLiteProvider databaseName="tracker.db" onInit={migrateDbIfNeeded}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <InitialLayout />
+          </GestureHandlerRootView>
+        </SQLiteProvider>
       </ClerkLoaded>
     </ClerkProvider>
   );
 };
+
 export default RootLayoutNav;

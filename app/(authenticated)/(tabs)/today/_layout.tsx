@@ -13,7 +13,7 @@ const Layout = () => {
         options={{
           title: 'Today',
           headerLargeTitle: true,
-          headerRight: () => <MoreButton />,
+          headerRight: () => <MoreButton pageName="Today" />,
         }}
       />
     </Stack>
