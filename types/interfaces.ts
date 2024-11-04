@@ -1,13 +1,14 @@
 export interface Todo {
   id: number;
   name: string;
-  description: string;
+  description?: string | null;
   priority: number;
-  due_date: number;
+  due_date?: number | null;
   date_added: number;
   completed: number;
-  date_completed: number;
+  date_completed?: number | null;
   project_id: number;
+  project_name?: string;
 }
 
 export interface Project {

@@ -8,9 +8,6 @@ type MoreButtonProps = {
 };
 
 const MoreButton = ({ pageName }: MoreButtonProps) => {
-  console.log(pageName);
-  const link = 'foo';
-
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>

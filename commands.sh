@@ -11,4 +11,8 @@ npm add zeego
 npm i react-native-ios-context-menu react-native-ios-utilities
 
 npx expo install expo-sqlite
+npm i drizzle-orm
 npm i date-fns
+
+npm i react-native-bouncy-checkbox
+npm i sonner-native react-native-svg

@@ -9,6 +9,7 @@ import { tokenCache } from '@/utils/cache';
 import { LogBox } from 'react-native';
 import { SQLiteProvider, type SQLiteDatabase } from 'expo-sqlite';
 import { migrateDbIfNeeded } from '@/utils/dbMigration';
+import { Toaster } from 'sonner-native';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 if (!CLERK_PUBLISHABLE_KEY) {
@@ -60,8 +61,12 @@ const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
       <ClerkLoaded>
-        <SQLiteProvider databaseName="tracker.db" onInit={migrateDbIfNeeded}>
+        <SQLiteProvider
+          databaseName="tracker.db"
+          onInit={migrateDbIfNeeded}
+          options={{ enableChangeListener: true }}>
           <GestureHandlerRootView style={{ flex: 1 }}>
+            <Toaster />
             <InitialLayout />
           </GestureHandlerRootView>
         </SQLiteProvider>
