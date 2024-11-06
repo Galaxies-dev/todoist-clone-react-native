@@ -12,7 +12,12 @@ npm i react-native-ios-context-menu react-native-ios-utilities
 
 npx expo install expo-sqlite
 npm i drizzle-orm
+npm install babel-plugin-inline-import
+npx drizzle-kit generate
 npm i date-fns
 
 npm i react-native-bouncy-checkbox
+
+npx @sentry/wizard@latest -s -i reactNative
+
 npm i sonner-native react-native-svg

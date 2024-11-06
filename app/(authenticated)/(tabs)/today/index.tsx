@@ -11,21 +11,20 @@ import TaskRow from '@/components/TaskRow';
 import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { todos } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+// import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
 interface Section {
   title: string;
   data: Todo[];
 }
-const expo = openDatabaseSync('tracker.db', { enableChangeListener: true });
 
 const Page = () => {
   const db = useSQLiteContext();
   const today = format(new Date(), 'd MMM · eee');
   const [refreshing, setRefreshing] = useState(false);
   const { top } = useSafeAreaInsets();
-  const drizzleDb = drizzle(expo);
+  const drizzleDb = drizzle(db);
   const [sectionListData, setSectionListData] = useState<Section[]>([]);
-
   const { data } = useLiveQuery(drizzleDb.select().from(todos).where(eq(todos.completed, 0)));
 
   useEffect(() => {
