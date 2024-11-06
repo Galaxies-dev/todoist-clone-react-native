@@ -11,6 +11,8 @@ interface TaskRowProps {
 }
 
 const TaskRow = ({ task }: TaskRowProps) => {
+  console.log('🚀 ~ TaskRow ~ task:', task);
+
   const db = useSQLiteContext();
 
   const markAsCompleted = async () => {

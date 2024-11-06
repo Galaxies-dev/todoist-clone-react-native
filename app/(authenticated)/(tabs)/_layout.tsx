@@ -1,13 +1,12 @@
-import { Tabs } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import MoreButton from '@/components/MoreButton';
-import { HapticTab } from '@/components/HapticTap';
+import { Tabs } from '@/components/Tabs';
 
 const Layout = () => {
   return (
     <Tabs
+      ignoresTopSafeArea
+      hapticFeedbackEnabled
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.dark,
@@ -15,54 +14,39 @@ const Layout = () => {
           backgroundColor: '#FEFAFA',
           borderTopWidth: 0,
         },
-        tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
         name="today"
         options={{
           title: 'Today',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'calendar-number' : 'calendar-number-outline'}
-              size={size}
-              color={color}
-            />
-          ),
+          tabBarIcon: ({ focused }) => ({
+            sfSymbol: focused ? 'calendar.circle.fill' : 'calendar.circle',
+          }),
         }}
       />
       <Tabs.Screen
         name="upcoming"
         options={{
           title: 'Upcoming',
-          headerRight: () => <MoreButton pageName="Upcoming" />,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={size} color={color} />
-          ),
+          tabBarIcon: () => ({ sfSymbol: 'calendar' }),
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
           title: 'Search',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'search' : 'search-outline'} size={size} color={color} />
-          ),
+          tabBarIcon: ({ focused }) => ({
+            sfSymbol: focused ? 'text.magnifyingglass' : 'magnifyingglass',
+          }),
         }}
       />
       <Tabs.Screen
         name="browse"
         options={{
           title: 'Browse',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? 'card-text' : 'card-text-outline'}
-              size={size}
-              color={color}
-            />
-          ),
+          tabBarIcon: ({ focused }) => ({
+            sfSymbol: focused ? 'doc.text.image.fill' : 'doc.text.image',
+          }),
         }}
       />
     </Tabs>

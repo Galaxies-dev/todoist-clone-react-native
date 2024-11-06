@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
 import TaskRow from '@/components/TaskRow';
 import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
-import { todos } from '@/db/schema';
+import { projects, todos } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 // import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 import * as Sentry from '@sentry/react-native';
@@ -26,10 +26,22 @@ const Page = () => {
   const { top } = useSafeAreaInsets();
   const drizzleDb = drizzle(db);
   const [sectionListData, setSectionListData] = useState<Section[]>([]);
-  const { data } = useLiveQuery(drizzleDb.select().from(todos).where(eq(todos.completed, 0)));
+  const { data } = useLiveQuery(
+    drizzleDb
+      .select()
+      .from(todos)
+      .leftJoin(projects, eq(todos.project_id, projects.id))
+      .where(eq(todos.completed, 0))
+  );
+  console.log('🚀 ~ Page ~ data:', data);
 
   useEffect(() => {
-    const listData: Section[] = [{ title: today, data }];
+    const formatedData = data?.map((item) => ({
+      ...item.todos,
+      project_name: item.projects?.name,
+    }));
+
+    const listData: Section[] = [{ title: today, data: formatedData }];
     setSectionListData(listData);
   }, [data]);
 
@@ -49,7 +61,7 @@ const Page = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: top - 26 }]}>
+    <SafeAreaView style={[styles.container, { paddingTop: top - 36 }]}>
       <SectionList
         contentInsetAdjustmentBehavior="automatic"
         sections={sectionListData}
