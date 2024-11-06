@@ -10,10 +10,6 @@ const Layout = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.dark,
-        tabBarStyle: {
-          backgroundColor: '#FEFAFA',
-          borderTopWidth: 0,
-        },
       }}>
       <Tabs.Screen
         name="today"

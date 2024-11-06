@@ -33,7 +33,6 @@ const Page = () => {
       .leftJoin(projects, eq(todos.project_id, projects.id))
       .where(eq(todos.completed, 0))
   );
-  console.log('🚀 ~ Page ~ data:', data);
 
   useEffect(() => {
     const formatedData = data?.map((item) => ({
