@@ -1,4 +1,4 @@
-import { Stack, useRouter, useSegments, usePathname } from 'expo-router';
+import { Stack, useRouter, useSegments, usePathname, useNavigationContainerRef } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
@@ -15,6 +15,22 @@ import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { openDatabaseSync } from 'expo-sqlite';
 import { projects, todos } from '@/db/schema';
 import AsyncStorage from 'expo-sqlite/async-storage';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: 'https://b372bde58b5ff46e9155ba0dfd6d9e03@o106619.ingest.us.sentry.io/4508240723640320',
+  attachScreenshot: true,
+  debug: false,
+  tracesSampleRate: 1.0,
+  _experiments: {
+    profilesSampleRate: 1.0,
+    replaysSessionSampleRate: 1.0,
+    replaysOnErrorSampleRate: 1.0,
+  },
+  integrations: [Sentry.mobileReplayIntegration(), Sentry.spotlightIntegration()],
+  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+  enableSpotlight: __DEV__,
+});
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 if (!CLERK_PUBLISHABLE_KEY) {
@@ -62,11 +78,17 @@ const InitialLayout = () => {
   );
 };
 
+const routingInstrumentation = Sentry.reactNavigationIntegration();
+
 const RootLayoutNav = () => {
+  const ref = useNavigationContainerRef();
+  useEffect(() => {
+    routingInstrumentation.registerNavigationContainer(ref);
+  }, [ref]);
+
   const expoDb = openDatabaseSync('todos.db');
   const db = drizzle(expoDb);
   const { success, error } = useMigrations(db, migrations);
-  console.log(success, error);
 
   useEffect(() => {
     if (!success) return;
@@ -115,4 +137,4 @@ const addDummyData = async (db: ExpoSQLiteDatabase) => {
   AsyncStorage.setItemSync('initialized', 'true');
 };
 
-export default RootLayoutNav;
+export default Sentry.wrap(RootLayoutNav);

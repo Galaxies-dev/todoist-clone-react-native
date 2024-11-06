@@ -1,7 +1,7 @@
 import Fab from '@/components/Fab';
 import { Todo } from '@/types/interfaces';
 import { useSQLiteContext, openDatabaseSync } from 'expo-sqlite';
-import { StyleSheet, Text, RefreshControl, SectionList } from 'react-native';
+import { StyleSheet, Text, RefreshControl, SectionList, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,6 +12,7 @@ import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { todos } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 // import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
+import * as Sentry from '@sentry/react-native';
 
 interface Section {
   title: string;
@@ -58,6 +59,7 @@ const Page = () => {
         }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={loadTasks} />}
       />
+
       <Fab />
     </SafeAreaView>
   );

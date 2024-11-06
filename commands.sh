@@ -1,10 +1,10 @@
 npx create-expo-app@latest todoistClone --template default@beta
 npx expo install expo-dev-client
 
-
 npm install @clerk/clerk-expo
 npm install expo-secure-store
 
+bun add react-native-bottom-tabs
 npx expo install expo-haptics
 
 npm add zeego
@@ -19,5 +19,8 @@ npm i date-fns
 npm i react-native-bouncy-checkbox
 
 npx @sentry/wizard@latest -s -i reactNative
+bun add @spotlightjs/spotlight  
+
+
 
 npm i sonner-native react-native-svg

@@ -29,7 +29,16 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "react-native-bottom-tabs",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "todoist",
+          "organization": "galaxies"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
