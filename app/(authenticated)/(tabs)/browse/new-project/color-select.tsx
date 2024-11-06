@@ -1,4 +1,4 @@
-import { Colors, PROJECT_COLORS, DEFAULT_PROJECT_COLOR } from '@/constants/Colors';
+import { PROJECT_COLORS, DEFAULT_PROJECT_COLOR } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';

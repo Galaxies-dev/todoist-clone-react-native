@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Link, useRouter, useGlobalSearchParams, Stack } from 'expo-router';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useSQLiteContext } from 'expo-sqlite';
-import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
+import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { projects } from '@/db/schema';
 
 const Page = () => {
@@ -24,12 +24,10 @@ const Page = () => {
   }, [bg]);
 
   const onCreateProject = async () => {
-    console.log('create project', projectName, selectedColor);
-    const res = await drizzleDb.insert(projects).values({
+    await drizzleDb.insert(projects).values({
       name: projectName,
       color: selectedColor,
     });
-    console.log('res', res);
     router.dismiss();
   };
 

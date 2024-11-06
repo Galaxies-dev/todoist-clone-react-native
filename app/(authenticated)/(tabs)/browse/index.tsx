@@ -1,18 +1,25 @@
 import Fab from '@/components/Fab';
-import { StyleSheet, Text, ScrollView, TouchableOpacity, View, FlatList } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { useAuth } from '@clerk/clerk-expo';
 import { Colors } from '@/constants/Colors';
 import { useSQLiteContext } from 'expo-sqlite';
 import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { projects } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import * as ContextMenu from 'zeego/context-menu';
+import Animated, { LinearTransition } from 'react-native-reanimated';
 
 const Page = () => {
   const { signOut } = useAuth();
   const db = useSQLiteContext();
   const drizzleDb = drizzle(db);
   const { data } = useLiveQuery(drizzleDb.select().from(projects));
+
+  const onDeleteProject = async (id: number) => {
+    await drizzleDb.delete(projects).where(eq(projects.id, id));
+  };
 
   return (
     <>
@@ -24,13 +31,29 @@ const Page = () => {
           </Link>
         </View>
 
-        <FlatList
+        <Animated.FlatList
           data={data}
+          itemLayoutAnimation={LinearTransition}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.projectButton} onPress={() => {}}>
-              <Text>#</Text>
-              <Text style={styles.projectButtonText}>{item.name}</Text>
-            </TouchableOpacity>
+            <ContextMenu.Root key={item.id}>
+              <ContextMenu.Trigger>
+                <TouchableOpacity style={styles.projectButton} onPress={() => {}}>
+                  <Text>#</Text>
+                  <Text style={styles.projectButtonText}>{item.name}</Text>
+                </TouchableOpacity>
+              </ContextMenu.Trigger>
+              <ContextMenu.Content>
+                <ContextMenu.Item key={'delete'} onSelect={() => onDeleteProject(item.id)}>
+                  <ContextMenu.ItemTitle>Delete</ContextMenu.ItemTitle>
+                  <ContextMenu.ItemIcon
+                    ios={{
+                      name: 'trash',
+                      pointSize: 18,
+                    }}
+                  />
+                </ContextMenu.Item>
+              </ContextMenu.Content>
+            </ContextMenu.Root>
           )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListFooterComponent={() => (
