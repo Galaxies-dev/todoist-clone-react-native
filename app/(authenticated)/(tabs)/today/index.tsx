@@ -1,7 +1,7 @@
 import Fab from '@/components/Fab';
 import { Todo } from '@/types/interfaces';
 import { useSQLiteContext, openDatabaseSync } from 'expo-sqlite';
-import { StyleSheet, Text, RefreshControl, SectionList, Button } from 'react-native';
+import { StyleSheet, Text, RefreshControl, SectionList, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -38,6 +38,7 @@ const Page = () => {
     const formatedData = data?.map((item) => ({
       ...item.todos,
       project_name: item.projects?.name,
+      project_color: item.projects?.color,
     }));
 
     const listData: Section[] = [{ title: today, data: formatedData }];
@@ -60,7 +61,7 @@ const Page = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: top - 36 }]}>
+    <View style={[styles.container, { paddingTop: top - 36 }]}>
       <SectionList
         contentInsetAdjustmentBehavior="automatic"
         sections={sectionListData}
@@ -72,7 +73,7 @@ const Page = () => {
       />
 
       <Fab />
-    </SafeAreaView>
+    </View>
   );
 };
 export default Page;
@@ -80,6 +81,7 @@ export default Page;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 82,
   },
   header: {
     fontSize: 16,

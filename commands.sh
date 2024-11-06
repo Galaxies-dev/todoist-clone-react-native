@@ -21,6 +21,11 @@ npm i react-native-bouncy-checkbox
 npx @sentry/wizard@latest -s -i reactNative
 bun add @spotlightjs/spotlight  
 
+eas build:configure
+eas build --local --profile development --platform ios
+eas build --auto-submit --platform ios
 
+bun i react-native-purchases
+bun i react-native-purchases-ui
 
 npm i sonner-native react-native-svg

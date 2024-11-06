@@ -1,8 +1,19 @@
 import { Colors } from '@/constants/Colors';
-import MoreButton from '@/components/MoreButton';
 import { Tabs } from '@/components/Tabs';
+import { useEffect } from 'react';
+import Purchases, { LOG_LEVEL } from 'react-native-purchases';
+import { Platform } from 'react-native';
 
 const Layout = () => {
+  useEffect(() => {
+    Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
+
+    if (Platform.OS === 'ios') {
+      Purchases.configure({ apiKey: 'appl_kuSYZRbTZgifEDSXguTFNWsiHdE' });
+    } else if (Platform.OS === 'android') {
+      Purchases.configure({ apiKey: '<revenuecat_project_google_api_key>' });
+    }
+  }, []);
   return (
     <Tabs
       ignoresTopSafeArea

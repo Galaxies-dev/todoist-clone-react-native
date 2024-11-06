@@ -49,6 +49,8 @@
     "react-native-gesture-handler": "~2.20.2",
     "react-native-ios-context-menu": "^2.5.1",
     "react-native-ios-utilities": "^4.5.1",
+    "react-native-purchases": "^8.2.5",
+    "react-native-purchases-ui": "^8.2.5",
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "4.0.0-beta.16",

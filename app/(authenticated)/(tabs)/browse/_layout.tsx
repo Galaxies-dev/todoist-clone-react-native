@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { TouchableOpacity, View, Button, Text, Image } from 'react-native';
+import { TouchableOpacity, Button, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';

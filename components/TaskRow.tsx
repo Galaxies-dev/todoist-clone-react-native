@@ -29,7 +29,7 @@ const TaskRow = ({ task }: TaskRowProps) => {
           <BouncyCheckbox
             textContainerStyle={{ display: 'none' }}
             size={25}
-            fillColor={Colors.primary}
+            fillColor={task.project_color}
             unFillColor="#FFFFFF"
             textStyle={{ color: '#000', fontSize: 16, textDecorationLine: 'none' }}
             onPress={markAsCompleted}
