@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { format, addDays, nextSaturday, addWeeks } from 'date-fns';
 import { useMMKVString } from 'react-native-mmkv';
+
 const Page = () => {
   const router = useRouter();
 
@@ -15,7 +16,6 @@ const Page = () => {
 
   const onSave = (date: Date) => {
     const dateString = date.toISOString();
-    console.log('SETTING SELECTED DATE:', dateString);
     setSelectedDate(dateString);
     router.dismiss();
   };

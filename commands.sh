@@ -33,5 +33,7 @@ npm install react-hook-form
 install @react-native-community/datetimepicker
 npx expo install react-native-mmkv
 
+npm install react-native-calendars
+
 npx expo install sonner-native 
 npx expo install react-native-svg

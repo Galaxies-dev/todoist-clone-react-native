@@ -41,7 +41,29 @@ const Page = () => {
       project_color: item.projects?.color,
     }));
 
-    const listData: Section[] = [{ title: today, data: formatedData }];
+    // Group tasks by day
+    const groupedByDay = formatedData?.reduce((acc: { [key: string]: Todo[] }, task) => {
+      const day = format(new Date(task.due_date || new Date()), 'd MMM · eee');
+      if (!acc[day]) {
+        acc[day] = [];
+      }
+      acc[day].push(task);
+      return acc;
+    }, {});
+
+    // Convert grouped data to sections array
+    const listData: Section[] = Object.entries(groupedByDay || {}).map(([day, tasks]) => ({
+      title: day,
+      data: tasks,
+    }));
+
+    // Sort sections by date
+    listData.sort((a, b) => {
+      const dateA = new Date(a.data[0].due_date || new Date());
+      const dateB = new Date(b.data[0].due_date || new Date());
+      return dateA.getTime() - dateB.getTime();
+    });
+
     setSectionListData(listData);
   }, [data]);
 

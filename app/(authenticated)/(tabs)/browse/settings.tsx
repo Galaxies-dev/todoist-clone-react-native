@@ -1,11 +1,32 @@
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
+import { getAppIcon, setAppIcon } from 'expo-dynamic-app-icon';
+import { useState } from 'react';
+const ICONS = [
+  {
+    name: 'Default',
+    icon: require('@/assets/images/icon.png'),
+  },
+  {
+    name: 'Dark',
+    icon: require('@/assets/images/icon-dark.png'),
+  },
+  {
+    name: 'Green',
+    icon: require('@/assets/images/icon-green.png'),
+  },
+  {
+    name: 'Blue',
+    icon: require('@/assets/images/icon-blue.png'),
+  },
+];
 
 const Page = () => {
   const headerHeight = useHeaderHeight();
+  const [activeIcon, setActiveIcon] = useState('Default');
 
   const goPro = async () => {
     const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall({
@@ -25,6 +46,11 @@ const Page = () => {
     }
   };
 
+  const onChangeAppIcon = async (icon: string) => {
+    await setAppIcon(icon.toLowerCase());
+    setActiveIcon(icon);
+  };
+
   return (
     <View style={[styles.container, { marginTop: headerHeight }]}>
       <TouchableOpacity style={styles.proButton} onPress={goPro}>
@@ -39,6 +65,21 @@ const Page = () => {
 
         <Ionicons name="chevron-forward" size={24} color={Colors.dark} />
       </TouchableOpacity>
+
+      <View style={styles.actions}>
+        {ICONS.map((icon) => (
+          <TouchableOpacity
+            key={icon.name}
+            style={styles.btn}
+            onPress={() => onChangeAppIcon(icon.name)}>
+            <Image source={icon.icon} style={{ width: 60, height: 60 }} />
+            <Text style={{ color: Colors.primary, fontSize: 18 }}>{icon.name}</Text>
+            {activeIcon.toLowerCase() === icon.name.toLowerCase() && (
+              <Ionicons name="checkmark" size={24} color={Colors.primary} />
+            )}
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
@@ -67,5 +108,17 @@ const styles = StyleSheet.create({
   proButtonSubtitle: {
     fontSize: 14,
     color: Colors.lightText,
+  },
+  actions: {
+    backgroundColor: 'rgba(256, 256, 256, 0.1)',
+    borderRadius: 16,
+    gap: 0,
+    margin: 20,
+  },
+  btn: {
+    padding: 14,
+    flexDirection: 'row',
+    gap: 20,
+    alignItems: 'center',
   },
 });

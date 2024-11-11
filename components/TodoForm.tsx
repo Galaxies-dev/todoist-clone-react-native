@@ -74,8 +74,6 @@ const TodoForm = ({ todo }: TodoFormProps) => {
 
   useEffect(() => {
     if (previouslySelectedDate) {
-      console.log('SETTING SELECTED DATE FROM PREVIOUSLY SELECTED DATE');
-
       setSelectedDate(new Date(previouslySelectedDate));
       setPreviouslySelectedDate(undefined);
     }
@@ -93,6 +91,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
           name: data.name,
           description: data.description,
           project_id: selectedProject.id,
+          due_date: selectedDate.getTime(),
         })
         .where(eq(todos.id, todo.id));
     } else {
@@ -103,6 +102,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
         date_added: Date.now(),
         completed: 0,
         project_id: selectedProject.id,
+        due_date: selectedDate.getTime(),
       });
     }
     router.dismiss();
@@ -170,7 +170,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
                 value={value}
                 onChangeText={onChange}
                 autoFocus
-                inputAccessoryViewID={'bottombar'}
+                autoCorrect={false}
               />
             )}
           />

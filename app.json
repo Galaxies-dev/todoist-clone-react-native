@@ -15,7 +15,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.supersimon.todoistClone"
+      "bundleIdentifier": "com.supersimon.todoistClone",
+      "icon": {
+        "any": "./assets/images/icon.png",
+        "dark": "./assets/images/icon-dark.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -37,6 +41,27 @@
           "url": "https://sentry.io/",
           "project": "todoist",
           "organization": "galaxies"
+        }
+      ],
+      [
+        "expo-dynamic-app-icon",
+        {
+          "default": {
+            "image": "./assets/images/icon.png",
+            "prerendered": true
+          },
+          "dark": {
+            "image": "./assets/images/icon-dark.png",
+            "prerendered": true
+          },
+          "green": {
+            "image": "./assets/images/icon-green.png",
+            "prerendered": true
+          },
+          "blue": {
+            "image": "./assets/images/icon-blue.png",
+            "prerendered": true
+          }
         }
       ]
     ],
