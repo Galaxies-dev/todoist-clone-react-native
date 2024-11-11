@@ -6,19 +6,48 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { projects } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as ContextMenu from 'zeego/context-menu';
 import Animated, { LinearTransition } from 'react-native-reanimated';
+import { useRevenueCat } from '@/providers/RevenueCat';
+import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
 
 const Page = () => {
+  const router = useRouter();
   const { signOut } = useAuth();
   const db = useSQLiteContext();
   const drizzleDb = drizzle(db);
   const { data } = useLiveQuery(drizzleDb.select().from(projects));
-
+  const { isPro } = useRevenueCat();
   const onDeleteProject = async (id: number) => {
     await drizzleDb.delete(projects).where(eq(projects.id, id));
+  };
+
+  const onNewProject = () => {
+    if (data.length >= 5 && !isPro) {
+      goPro();
+    } else {
+      router.push('/browse/new-project');
+    }
+  };
+
+  const goPro = async () => {
+    const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall({
+      displayCloseButton: false,
+    });
+
+    switch (paywallResult) {
+      case PAYWALL_RESULT.NOT_PRESENTED:
+      case PAYWALL_RESULT.ERROR:
+      case PAYWALL_RESULT.CANCELLED:
+        return false;
+      case PAYWALL_RESULT.PURCHASED:
+      case PAYWALL_RESULT.RESTORED:
+        return true;
+      default:
+        return false;
+    }
   };
 
   return (
@@ -26,9 +55,9 @@ const Page = () => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.sectionTitle}>My Projects</Text>
-          <Link href="/browse/new-project">
+          <TouchableOpacity onPress={onNewProject}>
             <Ionicons name="add" size={24} color={Colors.dark} />
-          </Link>
+          </TouchableOpacity>
         </View>
 
         <Animated.FlatList
@@ -38,7 +67,7 @@ const Page = () => {
             <ContextMenu.Root key={item.id}>
               <ContextMenu.Trigger>
                 <TouchableOpacity style={styles.projectButton} onPress={() => {}}>
-                  <Text>#</Text>
+                  <Text style={{ color: item.color }}>#</Text>
                   <Text style={styles.projectButtonText}>{item.name}</Text>
                 </TouchableOpacity>
               </ContextMenu.Trigger>

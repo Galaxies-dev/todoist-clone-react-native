@@ -28,4 +28,5 @@ eas build --auto-submit --platform ios
 bun i react-native-purchases
 bun i react-native-purchases-ui
 
-npm i sonner-native react-native-svg
+npx expo install sonner-native 
+npx expo install react-native-svg

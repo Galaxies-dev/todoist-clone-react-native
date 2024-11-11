@@ -11,7 +11,6 @@ const Page = () => {
     const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall({
       displayCloseButton: false,
     });
-    console.log(paywallResult);
 
     switch (paywallResult) {
       case PAYWALL_RESULT.NOT_PRESENTED:
