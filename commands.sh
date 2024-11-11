@@ -28,5 +28,10 @@ eas build --auto-submit --platform ios
 bun i react-native-purchases
 bun i react-native-purchases-ui
 
+npm install react-hook-form
+
+install @react-native-community/datetimepicker
+npx expo install react-native-mmkv
+
 npx expo install sonner-native 
 npx expo install react-native-svg

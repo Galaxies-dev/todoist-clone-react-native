@@ -2,13 +2,18 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import * as Haptics from 'expo-haptics';
+import { useRouter } from 'expo-router';
+
 const Fab = () => {
+  const router = useRouter();
+
   const onPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    router.push('/task/new');
   };
 
   return (
-    <TouchableOpacity style={styles.fab} activeOpacity={0.8}>
+    <TouchableOpacity style={styles.fab} activeOpacity={0.8} onPress={onPress}>
       <Ionicons name="add" size={28} color="#fff" />
     </TouchableOpacity>
   );

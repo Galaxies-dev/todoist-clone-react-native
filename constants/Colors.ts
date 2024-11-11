@@ -7,6 +7,13 @@ export const Colors = {
   lightBorder: '#d9d9d9',
 };
 
+export const DATE_COLORS = {
+  today: '#2f9d23',
+  tomorrow: '#9d6023',
+  weekend: '#233d9d',
+  other: '#54239d',
+};
+
 export const PROJECT_COLORS = [
   '#0079bf',
   '#d29034',
