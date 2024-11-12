@@ -25,9 +25,12 @@ Sentry.init({
     replaysSessionSampleRate: 1.0,
     replaysOnErrorSampleRate: 1.0,
   },
-  integrations: [Sentry.mobileReplayIntegration(), Sentry.spotlightIntegration()],
+  integrations: [
+    Sentry.mobileReplayIntegration(),
+    Sentry.spotlightIntegration(),
+    Sentry.spotlightIntegration(),
+  ],
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
-  enableSpotlight: __DEV__,
 });
 
 const routingInstrumentation = Sentry.reactNavigationIntegration();

@@ -1,11 +1,10 @@
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
 import { setAppIcon } from 'expo-dynamic-app-icon';
 import { useState } from 'react';
-import * as Sentry from '@sentry/react-native';
 
 const ICONS = [
   {
@@ -69,13 +68,6 @@ const Page = () => {
 
         <Ionicons name="chevron-forward" size={24} color={Colors.dark} />
       </TouchableOpacity>
-
-      <Button
-        title="Try!"
-        onPress={() => {
-          Sentry.captureException(new Error('First error'));
-        }}
-      />
 
       <View style={styles.actions}>
         {ICONS.map((icon) => (

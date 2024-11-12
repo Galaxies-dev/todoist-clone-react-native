@@ -87,7 +87,7 @@ To build the app, perform the following steps:
 <img src="./screenshots/sentry2.png" width=100%>
 <img src="./screenshots/sentry3.png" width=100%>
 <img src="./screenshots/sentry4.png" width=100%>
-<img src="./screenshots/sessionreplay.gif" width=100%>
+<img src="./screenshots/sentry.gif" width=100%>
 
 </div>
 
