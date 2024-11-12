@@ -18,19 +18,14 @@ import { addDummyData } from '@/utils/addDummyData';
 Sentry.init({
   dsn: 'https://b372bde58b5ff46e9155ba0dfd6d9e03@o106619.ingest.us.sentry.io/4508240723640320',
   attachScreenshot: true,
-  debug: false,
+  debug: true,
   tracesSampleRate: 1.0,
   _experiments: {
     profilesSampleRate: 1.0,
     replaysSessionSampleRate: 1.0,
     replaysOnErrorSampleRate: 1.0,
   },
-  integrations: [
-    Sentry.mobileReplayIntegration(),
-    Sentry.spotlightIntegration(),
-    Sentry.spotlightIntegration(),
-  ],
-  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+  integrations: [Sentry.mobileReplayIntegration(), Sentry.spotlightIntegration()],
 });
 
 const routingInstrumentation = Sentry.reactNavigationIntegration();
