@@ -115,7 +115,8 @@ const Page = () => {
           sections={agendaItems}
           renderItem={({ item }) => <TaskRow task={item} />}
           renderSectionHeader={(section) => {
-            const date = parse(section, 'dd-MM-yyyy', new Date());
+            const sectionTitle = section as unknown as string;
+            const date = parse(sectionTitle, 'dd-MM-yyyy', new Date());
             return <Text style={styles.header}>{format(date, 'd MMM · dddd')}</Text>;
           }}
           theme={{

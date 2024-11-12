@@ -1,5 +1,5 @@
 import Fab from '@/components/Fab';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { useAuth } from '@clerk/clerk-expo';
 import { Colors } from '@/constants/Colors';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -12,6 +12,7 @@ import * as ContextMenu from 'zeego/context-menu';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 import { useRevenueCat } from '@/providers/RevenueCat';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
+import * as Sentry from '@sentry/react-native';
 
 const Page = () => {
   const router = useRouter();
@@ -59,6 +60,13 @@ const Page = () => {
             <Ionicons name="add" size={24} color={Colors.dark} />
           </TouchableOpacity>
         </View>
+
+        <Button
+          title="Try!"
+          onPress={() => {
+            Sentry.captureException(new Error('First error'));
+          }}
+        />
 
         <Animated.FlatList
           data={data}

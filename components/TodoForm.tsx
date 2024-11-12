@@ -199,7 +199,8 @@ const TodoForm = ({ todo }: TodoFormProps) => {
             keyboardShouldPersistTaps="always">
             <Pressable
               onPress={() => {
-                setPreviouslySelectedDate(selectedDate.toISOString());
+                const dateString = selectedDate.toISOString();
+                setPreviouslySelectedDate(dateString);
                 router.push('/task/date-select');
               }}
               style={({ pressed }) => {

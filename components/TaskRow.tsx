@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import { Todo } from '@/types/interfaces';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useState, useEffect, Component, useRef } from 'react';
+import { useRef } from 'react';
 import { Colors } from '@/constants/Colors';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { Link, useRouter } from 'expo-router';
 import ReanimatedSwipeable, {
   SwipeableMethods,
-  SwipeableRef,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, {
   SharedValue,
@@ -78,8 +77,9 @@ const TaskRow = ({ task }: TaskRowProps) => {
   const db = useSQLiteContext();
   const reanimatedRef = useRef<SwipeableMethods>(null);
   const [previouslySelectedDate, setPreviouslySelectedDate] = useMMKVString('selectedDate');
-  const heightAnim = useSharedValue(80); // Approximate height of row
+  const heightAnim = useSharedValue(70); // Approximate height of row
   const opacityAnim = useSharedValue(1);
+  const router = useRouter();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -112,6 +112,7 @@ const TaskRow = ({ task }: TaskRowProps) => {
   const onSwipeableOpen = () => {
     setPreviouslySelectedDate(new Date(task?.due_date || 0).toISOString());
     reanimatedRef.current?.close();
+    router.push(`/task/date-select`);
   };
 
   return (
@@ -119,7 +120,7 @@ const TaskRow = ({ task }: TaskRowProps) => {
       <ReanimatedSwipeable
         ref={reanimatedRef}
         containerStyle={styles.swipeable}
-        friction={1}
+        friction={2}
         enableTrackpadTwoFingerGesture
         rightThreshold={40}
         renderRightActions={RightAction}
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   rightAction: {
+    height: 90,
     backgroundColor: '#8b8a8a',
     justifyContent: 'center',
     alignItems: 'flex-end',

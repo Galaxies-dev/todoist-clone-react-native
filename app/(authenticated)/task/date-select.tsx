@@ -10,12 +10,12 @@ import { useMMKVString } from 'react-native-mmkv';
 
 const Page = () => {
   const router = useRouter();
-
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useMMKVString('selectedDate');
 
   useEffect(() => {
     if (selectedDate) {
+      console.log('selectedDate', selectedDate);
       setCurrentDate(new Date(selectedDate));
     }
   }, [selectedDate]);

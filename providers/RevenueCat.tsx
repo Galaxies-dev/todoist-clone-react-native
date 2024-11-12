@@ -42,7 +42,6 @@ export const RevenueCatProvider = ({ children }: any) => {
 
   // Update user state based on previous purchases
   const updateCustomerInformation = async (customerInfo: CustomerInfo) => {
-    console.log('customerInfo', customerInfo);
     if (customerInfo?.entitlements.active['Pro'] !== undefined) {
       setIsPro(true);
     }

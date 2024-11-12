@@ -9,7 +9,7 @@ import { LogBox } from 'react-native';
 import { SQLiteProvider } from 'expo-sqlite';
 import { Toaster } from 'sonner-native';
 import migrations from '@/drizzle/migrations';
-import { drizzle, ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
+import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { openDatabaseSync } from 'expo-sqlite';
 import * as Sentry from '@sentry/react-native';

@@ -1,5 +1,5 @@
 import { Stack, useRouter } from 'expo-router';
-import { TouchableOpacity, useWindowDimensions, Text, Button, View } from 'react-native';
+import { useWindowDimensions, Button, View } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 const Layout = () => {
@@ -41,7 +41,7 @@ const Layout = () => {
           sheetGrabberVisible: true,
           sheetCornerRadius: 10,
           sheetExpandsWhenScrolledToEdge: false,
-          unstable_sheetFooter: () => <View style={{ height: 300, backgroundColor: '#fff' }} />,
+          unstable_sheetFooter: () => <View style={{ height: 400, backgroundColor: '#fff' }} />,
           headerLeft: () => (
             <Button title="Cancel" onPress={() => router.back()} color={Colors.primary} />
           ),

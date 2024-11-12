@@ -11,9 +11,7 @@ import { drizzle, useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { projects, todos } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 // import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
-import Animated, { LinearTransition } from 'react-native-reanimated';
-
-const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
+import Animated, { StretchInY, LayoutAnimationConfig } from 'react-native-reanimated';
 
 interface Section {
   title: string;
@@ -90,7 +88,13 @@ const Page = () => {
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic"
         sections={sectionListData}
-        renderItem={({ item }) => <TaskRow task={item} />}
+        renderItem={({ item }) => (
+          <LayoutAnimationConfig>
+            <Animated.View entering={StretchInY}>
+              <TaskRow task={item} />
+            </Animated.View>
+          </LayoutAnimationConfig>
+        )}
         renderSectionHeader={({ section }) => {
           return <Text style={styles.header}>{section.title}</Text>;
         }}

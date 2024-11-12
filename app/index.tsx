@@ -1,11 +1,11 @@
 import { Colors } from '@/constants/Colors';
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useOAuth } from '@clerk/clerk-expo';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as WebBrowser from 'expo-web-browser';
-
+import * as Sentry from '@sentry/react-native';
 const LoginScreen = () => {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_apple' });
   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: 'oauth_google' });
@@ -46,6 +46,12 @@ const LoginScreen = () => {
       <Text style={styles.title}>Organize your work and life, finally.</Text>
 
       <View style={styles.buttonContainer}>
+        <Button
+          title="Try!"
+          onPress={() => {
+            Sentry.captureException(new Error('First error'));
+          }}
+        />
         <TouchableOpacity style={[styles.btn]} onPress={handleAppleLogin}>
           <Ionicons name="logo-apple" size={24} />
           <Text style={[styles.btnText]}>Continue with Apple</Text>

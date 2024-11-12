@@ -25,3 +25,4 @@ ios/
 android/
 .env.local
 .sentry/
+.env.local
