@@ -9,6 +9,8 @@ npx expo install expo-haptics
 
 npm add zeego
 npm i react-native-ios-context-menu react-native-ios-utilities
+npx expo install sonner-native 
+npx expo install react-native-svg
 
 npx expo install expo-sqlite
 npm i drizzle-orm
@@ -37,5 +39,3 @@ npm install react-native-calendars
 
 npx expo install expo-clipboard
 
-npx expo install sonner-native 
-npx expo install react-native-svg
