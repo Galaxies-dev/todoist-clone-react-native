@@ -1,19 +1,106 @@
 import { StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import { Todo } from '@/types/interfaces';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useState } from 'react';
+import { useState, useEffect, Component, useRef } from 'react';
 import { Colors } from '@/constants/Colors';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import ReanimatedSwipeable, {
+  SwipeableMethods,
+  SwipeableRef,
+} from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Reanimated, {
+  SharedValue,
+  useAnimatedStyle,
+  runOnJS,
+  useAnimatedReaction,
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+  useSharedValue,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
+import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
+import { useMMKVString } from 'react-native-mmkv';
 
 interface TaskRowProps {
   task: Todo;
 }
 
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false, // Reanimated runs in strict mode by default
+});
+
+function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
+  const hasReachedThresholdUp = useSharedValue(false);
+  const hasReachedThresholdDown = useSharedValue(false);
+
+  useAnimatedReaction(
+    () => {
+      return drag.value;
+    },
+    (dragValue) => {
+      if (Math.abs(dragValue) > 100 && !hasReachedThresholdUp.value) {
+        runOnJS(Haptics.impactAsync)(Haptics.ImpactFeedbackStyle.Medium);
+        hasReachedThresholdUp.value = true;
+        hasReachedThresholdDown.value = false;
+      } else if (Math.abs(dragValue) < 100 && !hasReachedThresholdDown.value) {
+        runOnJS(Haptics.impactAsync)(Haptics.ImpactFeedbackStyle.Medium);
+        hasReachedThresholdDown.value = true;
+        hasReachedThresholdUp.value = false;
+      }
+    }
+  );
+
+  const animatedStyle = useAnimatedStyle(() => {
+    if (Math.abs(drag.value) > 100) {
+      return {
+        backgroundColor: Colors.secondary,
+      };
+    }
+    return {
+      backgroundColor: '#8b8a8a',
+    };
+  });
+
+  return (
+    <Reanimated.View style={[{ flex: 1 }]}>
+      <Reanimated.View style={[styles.rightAction, animatedStyle]}>
+        <Ionicons name="calendar-outline" size={26} color="#fff" />
+      </Reanimated.View>
+    </Reanimated.View>
+  );
+}
+
 const TaskRow = ({ task }: TaskRowProps) => {
   const db = useSQLiteContext();
+  const reanimatedRef = useRef<SwipeableMethods>(null);
+  const [previouslySelectedDate, setPreviouslySelectedDate] = useMMKVString('selectedDate');
+  const heightAnim = useSharedValue(80); // Approximate height of row
+  const opacityAnim = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      height: heightAnim.value,
+      opacity: opacityAnim.value,
+    };
+  });
 
   const markAsCompleted = async () => {
+    heightAnim.value = withTiming(0, {
+      duration: 300,
+      easing: Easing.inOut(Easing.ease),
+    });
+    opacityAnim.value = withTiming(0, {
+      duration: 300,
+      easing: Easing.inOut(Easing.ease),
+    });
+
+    // Wait for animation to complete before updating DB
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
     await db.runAsync(
       'UPDATE todos SET completed = ?, date_completed = ? WHERE id = ?',
       1,
@@ -22,23 +109,39 @@ const TaskRow = ({ task }: TaskRowProps) => {
     );
   };
 
+  const onSwipeableOpen = () => {
+    setPreviouslySelectedDate(new Date(task?.due_date || 0).toISOString());
+    reanimatedRef.current?.close();
+  };
+
   return (
-    <Link href={`/task/${task.id}`} style={styles.container} asChild>
-      <TouchableOpacity>
-        <View style={styles.row}>
-          <BouncyCheckbox
-            textContainerStyle={{ display: 'none' }}
-            size={25}
-            fillColor={task.project_color}
-            unFillColor="#FFFFFF"
-            textStyle={{ color: '#000', fontSize: 16, textDecorationLine: 'none' }}
-            onPress={markAsCompleted}
-          />
-          <Text style={styles.taskName}>{task.name}</Text>
-        </View>
-        <Text style={styles.projectName}>{task.project_name}</Text>
-      </TouchableOpacity>
-    </Link>
+    <Reanimated.View style={animatedStyle}>
+      <ReanimatedSwipeable
+        ref={reanimatedRef}
+        containerStyle={styles.swipeable}
+        friction={1}
+        enableTrackpadTwoFingerGesture
+        rightThreshold={40}
+        renderRightActions={RightAction}
+        onSwipeableWillOpen={onSwipeableOpen}>
+        <Link href={`/task/${task.id}`} style={styles.container} asChild>
+          <TouchableOpacity>
+            <View style={styles.row}>
+              <BouncyCheckbox
+                textContainerStyle={{ display: 'none' }}
+                size={25}
+                fillColor={task.project_color}
+                unFillColor="#FFFFFF"
+                textStyle={{ color: '#000', fontSize: 16, textDecorationLine: 'none' }}
+                onPress={markAsCompleted}
+              />
+              <Text style={styles.taskName}>{task.name}</Text>
+            </View>
+            <Text style={styles.projectName}>{task.project_name}</Text>
+          </TouchableOpacity>
+        </Link>
+      </ReanimatedSwipeable>
+    </Reanimated.View>
   );
 };
 
@@ -81,5 +184,15 @@ const styles = StyleSheet.create({
     color: Colors.dark,
     alignSelf: 'flex-end',
     marginTop: 4,
+  },
+  swipeable: {
+    backgroundColor: '#fff',
+  },
+  rightAction: {
+    backgroundColor: '#8b8a8a',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingHorizontal: 16,
+    flex: 1,
   },
 });

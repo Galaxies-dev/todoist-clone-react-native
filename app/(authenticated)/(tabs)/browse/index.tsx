@@ -1,5 +1,5 @@
 import Fab from '@/components/Fab';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '@clerk/clerk-expo';
 import { Colors } from '@/constants/Colors';
 import { useSQLiteContext } from 'expo-sqlite';

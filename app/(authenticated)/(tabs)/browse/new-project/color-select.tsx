@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { Ionicons } from '@expo/vector-icons';
+
 const Page = () => {
   const [selected, setSelected] = useState<string>(DEFAULT_PROJECT_COLOR);
   const router = useRouter();

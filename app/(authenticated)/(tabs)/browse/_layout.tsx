@@ -4,6 +4,7 @@ import { TouchableOpacity, Button, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import { useUser } from '@clerk/clerk-expo';
+
 const Layout = () => {
   const router = useRouter();
   return (

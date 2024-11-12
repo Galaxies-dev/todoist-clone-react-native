@@ -3,8 +3,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
-import { getAppIcon, setAppIcon } from 'expo-dynamic-app-icon';
+import { setAppIcon } from 'expo-dynamic-app-icon';
 import { useState } from 'react';
+
 const ICONS = [
   {
     name: 'Default',

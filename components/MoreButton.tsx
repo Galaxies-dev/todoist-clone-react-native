@@ -2,12 +2,20 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from '@/constants/Colors';
 import * as DropdownMenu from 'zeego/dropdown-menu';
+import * as Clipboard from 'expo-clipboard';
+import { toast } from 'sonner-native';
 
 type MoreButtonProps = {
   pageName: string;
 };
 
 const MoreButton = ({ pageName }: MoreButtonProps) => {
+  const copyToClipboard = async () => {
+    const path = `myapp://(authenticated)/(tabs)/${pageName.toLowerCase()}`;
+    await Clipboard.setStringAsync(path);
+    toast.success(`Page Link copied to your clipboard`);
+  };
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -17,7 +25,10 @@ const MoreButton = ({ pageName }: MoreButtonProps) => {
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content>
-        <DropdownMenu.Item key="link" textValue={`Copy Link to ${pageName}`}>
+        <DropdownMenu.Item
+          key="link"
+          textValue={`Copy Link to ${pageName}`}
+          onSelect={copyToClipboard}>
           <DropdownMenu.ItemTitle>Copy</DropdownMenu.ItemTitle>
           <DropdownMenu.ItemIcon
             ios={{

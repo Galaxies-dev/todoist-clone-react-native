@@ -1,6 +1,7 @@
 import { Stack, useRouter } from 'expo-router';
 import { TouchableOpacity, useWindowDimensions, Text, Button, View } from 'react-native';
 import { Colors } from '@/constants/Colors';
+
 const Layout = () => {
   const { height } = useWindowDimensions();
   const router = useRouter();
@@ -36,7 +37,7 @@ const Layout = () => {
         options={{
           title: 'Schedule',
           presentation: 'formSheet',
-          sheetAllowedDetents: height > 700 ? [0.7, 0.99] : 'fitToContents',
+          sheetAllowedDetents: height > 700 ? [0.6, 0.9] : 'fitToContents',
           sheetGrabberVisible: true,
           sheetCornerRadius: 10,
           sheetExpandsWhenScrolledToEdge: false,

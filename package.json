@@ -31,6 +31,7 @@
     "expo": "~52.0.0-preview.12",
     "expo-auth-session": "~6.0.0",
     "expo-blur": "~14.0.1",
+    "expo-clipboard": "~7.0.0",
     "expo-constants": "~17.0.2",
     "expo-dev-client": "~5.0.0-preview.4",
     "expo-dynamic-app-icon": "^1.2.0",

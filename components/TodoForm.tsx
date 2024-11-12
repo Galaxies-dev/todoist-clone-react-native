@@ -23,6 +23,7 @@ import { Project } from '@/types/interfaces';
 import { eq } from 'drizzle-orm';
 import { format, isSameDay, isTomorrow } from 'date-fns';
 import { useMMKVString } from 'react-native-mmkv';
+import { toast } from 'sonner-native';
 
 type TodoFormProps = {
   todo?: Todo & { project_name: string; project_color: string; project_id: number };
@@ -94,6 +95,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
           due_date: selectedDate.getTime(),
         })
         .where(eq(todos.id, todo.id));
+      toast.success('Task Updated');
     } else {
       await drizzleDb.insert(todos).values({
         name: data.name,
@@ -104,6 +106,7 @@ const TodoForm = ({ todo }: TodoFormProps) => {
         project_id: selectedProject.id,
         due_date: selectedDate.getTime(),
       });
+      toast.success('New Task Added');
     }
     router.dismiss();
   };
@@ -195,7 +198,10 @@ const TodoForm = ({ todo }: TodoFormProps) => {
             style={styles.actionButtonsContainer}
             keyboardShouldPersistTaps="always">
             <Pressable
-              onPress={() => router.push('/task/date-select')}
+              onPress={() => {
+                setPreviouslySelectedDate(selectedDate.toISOString());
+                router.push('/task/date-select');
+              }}
               style={({ pressed }) => {
                 return [
                   styles.outlinedButton,

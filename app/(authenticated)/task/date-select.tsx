@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { Colors, DATE_COLORS } from '@/constants/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { format, addDays, nextSaturday, addWeeks } from 'date-fns';
 import { useMMKVString } from 'react-native-mmkv';
@@ -13,6 +13,12 @@ const Page = () => {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useMMKVString('selectedDate');
+
+  useEffect(() => {
+    if (selectedDate) {
+      setCurrentDate(new Date(selectedDate));
+    }
+  }, [selectedDate]);
 
   const onSave = (date: Date) => {
     const dateString = date.toISOString();

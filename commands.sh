@@ -35,5 +35,7 @@ npx expo install react-native-mmkv
 
 npm install react-native-calendars
 
+npx expo install expo-clipboard
+
 npx expo install sonner-native 
 npx expo install react-native-svg
