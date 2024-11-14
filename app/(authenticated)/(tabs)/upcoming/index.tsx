@@ -34,7 +34,6 @@ const Page = () => {
   );
   const [agendaItems, setAgendaItems] = useState<Section[]>([]);
 
-  console.log(data);
   const withProjectData = data?.map((item) => ({
     ...item.todos,
     project_name: item.projects?.name,

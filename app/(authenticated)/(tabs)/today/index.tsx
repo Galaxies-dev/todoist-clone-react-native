@@ -83,8 +83,6 @@ const Page = () => {
   return (
     <View style={[styles.container, { paddingTop: top - 36 }]}>
       <SectionList
-        // layoutAnimation={LinearTransition}
-        // itemLayoutAnimation={LinearTransition}
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic"
         sections={sectionListData}

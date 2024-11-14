@@ -48,8 +48,6 @@ const Page = () => {
   };
 
   const onChangeAppIcon = async (icon: string) => {
-    console.log('onChangeAppIcon', icon);
-
     await setAppIcon(icon.toLowerCase());
     setActiveIcon(icon);
   };

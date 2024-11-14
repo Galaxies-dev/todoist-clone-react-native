@@ -15,7 +15,6 @@ const Page = () => {
 
   useEffect(() => {
     if (selectedDate) {
-      console.log('selectedDate', selectedDate);
       setCurrentDate(new Date(selectedDate));
     }
   }, [selectedDate]);
