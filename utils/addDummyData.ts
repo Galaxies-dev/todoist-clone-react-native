@@ -1,7 +1,7 @@
 import { projects, todos } from '@/db/schema';
 import { ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
 
-import AsyncStorage from 'expo-sqlite/async-storage';
+import AsyncStorage from 'expo-sqlite/kv-store';
 
 export const addDummyData = async (db: ExpoSQLiteDatabase) => {
   const value = AsyncStorage.getItemSync('initialized');

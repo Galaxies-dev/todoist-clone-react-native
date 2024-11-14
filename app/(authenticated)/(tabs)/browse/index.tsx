@@ -61,13 +61,6 @@ const Page = () => {
           </TouchableOpacity>
         </View>
 
-        <Button
-          title="Try!"
-          onPress={() => {
-            Sentry.captureException(new Error('This should not happen'));
-          }}
-        />
-
         <Animated.FlatList
           data={data}
           itemLayoutAnimation={LinearTransition}
@@ -94,9 +87,17 @@ const Page = () => {
           )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListFooterComponent={() => (
-            <TouchableOpacity style={styles.clearButton} onPress={() => signOut()}>
-              <Text style={styles.clearButtonText}>Log Out</Text>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity style={styles.clearButton} onPress={() => signOut()}>
+                <Text style={styles.clearButtonText}>Log Out</Text>
+              </TouchableOpacity>
+              <Button
+                title="I trigger an error!"
+                onPress={() => {
+                  Sentry.captureException(new Error('This should not happen'));
+                }}
+              />
+            </>
           )}
         />
       </View>

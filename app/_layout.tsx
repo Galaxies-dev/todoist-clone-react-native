@@ -19,13 +19,20 @@ Sentry.init({
   dsn: 'https://b372bde58b5ff46e9155ba0dfd6d9e03@o106619.ingest.us.sentry.io/4508240723640320',
   attachScreenshot: true,
   debug: true,
-  tracesSampleRate: 1.0,
+  tracesSampleRate: 1.0, // Adjust this value in production
   _experiments: {
-    profilesSampleRate: 1.0,
-    replaysSessionSampleRate: 1.0,
+    profilesSampleRate: 1.0, // Only during debugging, change to lower value in production
+    replaysSessionSampleRate: 1.0, // Only during debugging, change to lower value in production
     replaysOnErrorSampleRate: 1.0,
   },
-  integrations: [Sentry.mobileReplayIntegration(), Sentry.spotlightIntegration()],
+  integrations: [
+    Sentry.mobileReplayIntegration({
+      maskAllText: false,
+      maskAllImages: false,
+      maskAllVectors: false,
+    }),
+    Sentry.spotlightIntegration(),
+  ],
 });
 
 const routingInstrumentation = Sentry.reactNavigationIntegration();

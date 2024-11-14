@@ -17,7 +17,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.supersimon.todoistClone",
       "icon": {
-        "any": "./assets/images/icon.png",
+        "light": "./assets/images/icon.png",
         "dark": "./assets/images/icon-dark.png"
       }
     },
@@ -63,7 +63,8 @@
             "prerendered": true
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
