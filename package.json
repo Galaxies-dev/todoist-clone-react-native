@@ -21,7 +21,7 @@
     "@gorhom/bottom-sheet": "^5",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-navigation/native": "^7.0.1",
-    "@sentry/react-native": "~6.1.0",
+    "@sentry/react-native": "6.1.0",
     "@spotlightjs/spotlight": "^2.5.0",
     "add": "^2.0.6",
     "babel-plugin-inline-import": "^3.0.0",

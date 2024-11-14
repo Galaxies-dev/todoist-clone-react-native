@@ -15,6 +15,10 @@ import { openDatabaseSync } from 'expo-sqlite';
 import * as Sentry from '@sentry/react-native';
 import { addDummyData } from '@/utils/addDummyData';
 
+const navigationIntegration = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true, // Only in native builds, not in Expo Go.
+});
+
 Sentry.init({
   dsn: 'https://b372bde58b5ff46e9155ba0dfd6d9e03@o106619.ingest.us.sentry.io/4508240723640320',
   attachScreenshot: true,
@@ -32,10 +36,9 @@ Sentry.init({
       maskAllVectors: false,
     }),
     Sentry.spotlightIntegration(),
+    navigationIntegration,
   ],
 });
-
-const routingInstrumentation = Sentry.reactNavigationIntegration();
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 if (!CLERK_PUBLISHABLE_KEY) {
@@ -90,7 +93,7 @@ function Loading() {
 const RootLayoutNav = () => {
   const ref = useNavigationContainerRef();
   useEffect(() => {
-    routingInstrumentation.registerNavigationContainer(ref);
+    navigationIntegration.registerNavigationContainer(ref);
   }, [ref]);
 
   const expoDb = openDatabaseSync('todos.db');
