@@ -27,11 +27,6 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
     "plugins": [
       "expo-router",
       "react-native-bottom-tabs",

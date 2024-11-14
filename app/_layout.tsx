@@ -2,16 +2,14 @@ import { Stack, useRouter, useSegments, usePathname, useNavigationContainerRef }
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import { Suspense, useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, LogBox } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { tokenCache } from '@/utils/cache';
-import { LogBox } from 'react-native';
-import { SQLiteProvider } from 'expo-sqlite';
 import { Toaster } from 'sonner-native';
 import migrations from '@/drizzle/migrations';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import { openDatabaseSync } from 'expo-sqlite';
+import { SQLiteProvider, openDatabaseSync } from 'expo-sqlite';
 import * as Sentry from '@sentry/react-native';
 import { addDummyData } from '@/utils/addDummyData';
 
@@ -22,7 +20,7 @@ const navigationIntegration = Sentry.reactNavigationIntegration({
 Sentry.init({
   dsn: 'https://b372bde58b5ff46e9155ba0dfd6d9e03@o106619.ingest.us.sentry.io/4508240723640320',
   attachScreenshot: true,
-  debug: true,
+  debug: false,
   tracesSampleRate: 1.0, // Adjust this value in production
   _experiments: {
     profilesSampleRate: 1.0, // Only during debugging, change to lower value in production

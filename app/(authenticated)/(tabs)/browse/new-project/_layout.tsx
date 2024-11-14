@@ -1,7 +1,6 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { Button } from 'react-native';
-import { useRouter } from 'expo-router';
 
 const Layout = () => {
   const router = useRouter();

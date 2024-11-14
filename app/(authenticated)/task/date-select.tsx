@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { Colors, DATE_COLORS } from '@/constants/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
