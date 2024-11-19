@@ -1,4 +1,4 @@
-npx create-expo-app@latest todoistClone --template default@beta
+npx create-expo-app@latest todoistClone
 npx expo install expo-dev-client
 
 npm install @clerk/clerk-expo
