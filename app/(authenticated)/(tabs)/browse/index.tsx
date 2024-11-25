@@ -21,6 +21,7 @@ const Page = () => {
   const drizzleDb = drizzle(db);
   const { data } = useLiveQuery(drizzleDb.select().from(projects));
   const { isPro } = useRevenueCat();
+
   const onDeleteProject = async (id: number) => {
     await drizzleDb.delete(projects).where(eq(projects.id, id));
   };
@@ -91,12 +92,6 @@ const Page = () => {
               <TouchableOpacity style={styles.clearButton} onPress={() => signOut()}>
                 <Text style={styles.clearButtonText}>Log Out</Text>
               </TouchableOpacity>
-              <Button
-                title="I trigger an error!"
-                onPress={() => {
-                  Sentry.captureException(new Error('This should not happen'));
-                }}
-              />
             </>
           )}
         />
