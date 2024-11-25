@@ -1,6 +1,6 @@
 # React Native Todoist Clone with Clerk, RevenueCat & Sentry
 
-This is a React Native Todoist clone using [Clerk](https://go.clerk.com/WKHSBp0) for user authentication and [RevenueCat](https://www.revenuecat.com/docs/getting-started/installation/reactnative?utm_medium=sponsored&utm_source=youtube&utm_campaign=SimonGrimm) for in-app purchases and subscriptions.
+This is a React Native Todoist clone using [Clerk](https://go.clerk.com/1vaJMZL) for user authentication and [RevenueCat](https://www.revenuecat.com/docs/getting-started/installation/reactnative?utm_medium=sponsored&utm_source=youtube&utm_campaign=SimonGrimm) for in-app purchases and subscriptions.
 
 For improved debuggability, we've added [Sentry](https://sentry.io/welcome?utm_source=simongrimm&utm_medium=paid-community&utm_campaign=mobile-fy25q3-builders&utm_content=partner-react-native-mobile-learnmore&code=simongrimm) to the project.
 
